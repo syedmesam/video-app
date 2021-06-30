@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+// use FFMpeg\FFMpeg;
 use App\Models\Upload;
 use FFMpeg\Media\Video;
 use Illuminate\Http\Request;
+use App\Jobs\ConvertingVideo;
+use FFMpeg\Format\Video\X264;
+use FFMpeg\Filters\Video\VideoFilters;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class HomeController extends Controller
 {
@@ -44,13 +49,10 @@ class HomeController extends Controller
         ]);
         $uploadedFile = $request->file('video');
         $filename = time().$uploadedFile->getClientOriginalName();
-
-        Storage::disk('local')->putFileAs(
-            'files/'.$filename,
-            $uploadedFile,
-            $filename
-          );
-
+        $r = $uploadedFile->storeAs('uploads',$filename);
+        
+        
+         
         $upload = new Upload;
         $upload->user_id = auth()->user()->id;
         $upload->filename = $filename;
@@ -59,6 +61,10 @@ class HomeController extends Controller
 
         $upload->save();
 
+        // ConvertingVideo::dispatch($filename);
+        $job = new ConvertingVideo($filename);
+        dispatch($job);
+        return 'good';
         
         dd($filename);
         // return view('home');
