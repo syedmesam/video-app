@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Upload;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/upload', [App\Http\Controllers\HomeController::class, 'uploadVideo'])->name('upload');
 Route::get('/get/video', [App\Http\Controllers\HomeController::class, 'getVideo'])->name('getVideo');
+Route::get('/get/all',function(){
+    return view('videos')->with(['videos'=>Upload::all()]);
+});

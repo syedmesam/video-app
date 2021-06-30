@@ -21,9 +21,14 @@
         </style>
     </head>
     <body class="antialiased">
-        <video width="320" height="240" controls>
+        @foreach ($videos as $video)
+
+        {{$video->filename}}
+            <video width="320" height="240" controls>
             <source src="{{ route('getVideo', $video->id)  }}" type="video/mp4">
             Your browser does not support the video tag.
     </video>
+        @endforeach
+        
     </body>
 </html>
