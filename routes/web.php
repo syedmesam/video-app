@@ -24,5 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/upload', [App\Http\Controllers\HomeController::class, 'uploadVideo'])->name('upload');
 Route::get('/get/video', [App\Http\Controllers\HomeController::class, 'getVideo'])->name('getVideo');
 Route::get('/get/all',function(){
-    return view('videos')->with(['videos'=>Upload::all()]);
+    $videos = Upload::latest()->get();
+    
+    return view('videos')->with(['videos'=> $videos]);
 });

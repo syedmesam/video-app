@@ -47,12 +47,11 @@ class HomeController extends Controller
             'description' => ['required','string','max:200'],
             'video' => ['required','mimetypes:video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi'],
         ]);
+
         $uploadedFile = $request->file('video');
         $filename = time().$uploadedFile->getClientOriginalName();
         $r = $uploadedFile->storeAs('uploads',$filename);
         
-        
-         
         $upload = new Upload;
         $upload->user_id = auth()->user()->id;
         $upload->filename = $filename;
@@ -60,25 +59,17 @@ class HomeController extends Controller
         $upload->description = $request->description;
 
         $upload->save();
-
-        // ConvertingVideo::dispatch($filename);
-        $job = new ConvertingVideo($filename);
+       
+        $job = new ConvertingVideo($filename,$upload->id);
         dispatch($job);
+        
         return 'good';
         
         dd($filename);
         // return view('home');
     }
 
-    function getVideo() 
-    {
-        $u = Upload::find(1);
-        $name = $u->filename;
-        $video = Storage::disk('local')->get("files/{$name}/{$name}");
-        $response = Response::make($video, 200);
-        $response->header('Content-Type', 'video/mp4');
-        return $response;
-    }
+  
 
     
 }
