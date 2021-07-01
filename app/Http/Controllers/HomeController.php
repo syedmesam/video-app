@@ -41,7 +41,7 @@ class HomeController extends Controller
      */
     public function uploadVideo(Request $request)
     {
-        
+
         $request->validate([
             'title' => ['required','string','max:20'],
             'description' => ['required','string','max:200'],
@@ -63,7 +63,7 @@ class HomeController extends Controller
         $job = new ConvertingVideo($filename,$upload->id);
         dispatch($job);
 
-        return redirect()->back()->with(['success' , 'Your Video Has Been Uploaded Succesfully!']);
+        return redirect()->back()->with('message' , 'Your Video Has Been Uploaded Succesfully!');
         
         
     }

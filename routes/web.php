@@ -20,11 +20,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/upload', [App\Http\Controllers\HomeController::class, 'uploadVideo'])->name('upload');
-Route::get('/get/video', [App\Http\Controllers\HomeController::class, 'getVideo'])->name('getVideo');
-Route::get('/get/all',function(){
-    $videos = Upload::latest()->get();
-    
-    return view('videos')->with(['videos'=> $videos]);
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/upload', [App\Http\Controllers\HomeController::class, 'uploadVideo'])->name('upload');
+    Route::get('/get/all', function () {
+        $videos = Upload::latest()->get();
+
+        return view('videos')->with(['videos' => $videos]);
+    })->name('all.videos');
 });

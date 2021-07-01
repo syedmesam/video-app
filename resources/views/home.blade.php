@@ -13,21 +13,22 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    @if (session('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                    
+                <a href="{{route('all.videos')}}">Click To See Uploaded Videos</a>
+                    
                 </div>
-                
+                @if (session()->has('message'))
+                    <div class="alert alert-success text-center" role="alert">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
                 <div class="card text-center">
                     <form action="{{route('upload')}}" method="POST" enctype="multipart/form-data">
-                        @csrf   
+                        <div>@csrf</div>   
                         <h3>Upload Video</h3>
                         <label for="title"><h5>Title</h5></label>
                         <input type="text" name="title" >
+                        {{-- <br> --}}
                         <label for="title"><h5>Description</h5></label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" 
                         rows="3" name="description" maxlength="200"></textarea>
@@ -35,16 +36,11 @@
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keywords"></textarea> --}}
                         {{-- <label class="form-label" for="customFile">Default file input example</label> --}}
                         <input type="file" class="form-control" id="customFile" name="video" />
-                        <button class="btn btn-primary btn-lg" style="margin: 5px;">Upload</button>
+                        <button type="submit" class="btn btn-primary btn-lg" style="margin: 5px;">Upload</button>
                     </form>
                 </div>
                 
-                    @if ($errors->has('video'))
-                    <div class="alert alert-danger text-center">
-                        <strong>{{ $errors->first('video') }}</strong> 
-                      </div>
-                       
-                    @endif
+ 
                     @if ($errors->has('title'))
                     <div class="alert alert-danger text-center">
                         <strong>{{ $errors->first('title') }}</strong> 
@@ -54,6 +50,12 @@
                     @if ($errors->has('description'))
                     <div class="alert alert-danger text-center">
                         <strong>{{ $errors->first('description') }}</strong> 
+                      </div>
+                       
+                    @endif
+                    @if ($errors->has('video'))
+                    <div class="alert alert-danger text-center">
+                        <strong>{{ $errors->first('video') }}</strong> 
                       </div>
                        
                     @endif
