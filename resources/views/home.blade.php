@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
@@ -22,23 +22,29 @@
                         {{ session()->get('message') }}
                     </div>
                 @endif
-                <div class="card text-center">
+                
                     <form action="{{route('upload')}}" method="POST" enctype="multipart/form-data">
-                        <div>@csrf</div>   
-                        <h3>Upload Video</h3>
-                        <label for="title"><h5>Title</h5></label>
-                        <input type="text" name="title" >
-                        {{-- <br> --}}
-                        <label for="title"><h5>Description</h5></label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" 
-                        rows="3" name="description" maxlength="200"></textarea>
-                        {{-- <label for="title"><h5>Keywords</h5></label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="keywords"></textarea> --}}
-                        {{-- <label class="form-label" for="customFile">Default file input example</label> --}}
-                        <input type="file" class="form-control" id="customFile" name="video" />
-                        <button type="submit" class="btn btn-primary btn-lg" style="margin: 5px;">Upload</button>
+                        @csrf 
+                        <div class="card text-center">
+                            <h3>Upload Video</h3>
+                        </div>
+                        <div class="card text-left">
+                            <label for="title" ><h5>Title</h5></label>
+                            <input type="text" name="title" style="background-color: rgb(236, 236, 236);">
+                            <br>
+                        </div>
+                        <div class="card text-left">
+                            <label for="title"><h5>Description</h5></label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" 
+                            rows="3" name="description" maxlength="200" style="background-color: rgb(236, 236, 236);"></textarea>
+                        </div>
+                        <div class="card text-center">
+                            <input type="file" class="form-control" id="customFile" name="video" />
+                            <button type="submit" class="btn btn-primary btn-lg" style="margin: 5px;">Upload</button>
+                        </div>
+                       
                     </form>
-                </div>
+                
                 
  
                     @if ($errors->has('title'))
