@@ -13,8 +13,7 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 use ProtoneMedia\LaravelFFMpeg\Exporters\HLSVideoFilters;
 
-class ConvertingVideo 
-// implements ShouldQueue
+class ConvertingVideo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $filename;

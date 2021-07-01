@@ -62,11 +62,10 @@ class HomeController extends Controller
        
         $job = new ConvertingVideo($filename,$upload->id);
         dispatch($job);
+
+        return redirect()->back()->with(['success' , 'Your Video Has Been Uploaded Succesfully!']);
         
-        return 'good';
         
-        dd($filename);
-        // return view('home');
     }
 
   
